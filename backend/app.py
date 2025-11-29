@@ -1,9 +1,11 @@
 import os
+import uuid
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
-from models import User, db
+from models import Category, Picture, User, db
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -86,5 +88,50 @@ def get_current_user():
     else:
         return jsonify({"authenticated": False}), 200
 
+@app.route('/api/categories', methods=['GET'])
+def get_categories():
+    categories = Category.query.all()
+    return jsonify([{"id": c.id, "name": c.name} for c in categories])
+
+@app.route('/api/upload', methods=['POST'])
+@login_required
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    
+    file = request.files['file']
+    title = request.form.get('title')
+    categories_ids = request.form.get('categories') 
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    if file:
+        filename = secure_filename(file.filename)
+        unique_filename = str(uuid.uuid4()) + "_" + filename # To avoid name collisions
+        
+        save_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        file.save(save_path)
+
+        new_picture = Picture(
+            title=title,
+            file_path=unique_filename,
+            author=current_user,
+            size_kb=os.path.getsize(save_path) // 1024 # Size in KB
+        )
+
+        # Associate categories if provided 
+        if categories_ids:
+            cat_list = [int(id) for id in categories_ids.split(',') if id]
+            for cat_id in cat_list:
+                category = db.session.get(Category, cat_id)
+                if category:
+                    new_picture.categories.append(category)
+
+        db.session.add(new_picture)
+        db.session.commit()
+
+        return jsonify({"message": "File uploaded successfully!"}), 201
+    
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
