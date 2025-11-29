@@ -1,6 +1,6 @@
 import os
 import uuid
-from flask import Blueprint, jsonify, request, current_app
+from flask import Blueprint, jsonify, request, current_app, send_file
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from sqlalchemy import desc
@@ -90,3 +90,46 @@ def get_all_photos():
         })
     
     return jsonify(output)
+
+@photos_bp.route('/api/photos/<int:photo_id>/download', methods=['GET'])
+def download_photo(photo_id):
+    photo = db.session.get(Picture, photo_id)
+    if not photo:
+        return jsonify({"error": "Not found"}), 404
+    
+    is_author = current_user.is_authenticated and current_user == photo.author
+
+    if not is_author:
+        photo.downloads_count += 1
+        db.session.commit()
+    else:
+        print(f"User {current_user.username} downloaded their own photo. Count did not increase.")
+    
+    
+    path = os.path.join(current_app.config['UPLOAD_FOLDER'], photo.file_path)
+    return send_file(path, as_attachment=True, download_name=f"{photo.title}.{photo.format.lower()}")
+
+@photos_bp.route('/api/photos/<int:photo_id>', methods=['DELETE'])
+@login_required
+def delete_photo(photo_id):
+    photo = db.session.get(Picture, photo_id)
+    if not photo:
+        return jsonify({"error": "Not found"}), 404
+    
+    is_owner = photo.author == current_user
+    is_admin = current_user.role in ['admin', 'moder']
+
+    if not is_owner and not is_admin:
+        return jsonify({"error": "Permission denied"}), 403
+
+    try:
+        file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], photo.file_path)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+    except Exception as e:
+        print(f"Error deleting file: {e}")
+
+    db.session.delete(photo)
+    db.session.commit()
+    
+    return jsonify({"message": "Deleted successfully"}), 200

@@ -1,9 +1,12 @@
 import Navbar from '../components/Navbar';
 import React, { useEffect, useState } from 'react';
+import PhotoDetailModal from '../components/PhotoDetailModal';
 
 export default function Home() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedPhoto, setSelectedPhoto] = useState(null); 
 
   useEffect(() => {
     fetch('http://localhost:5000/api/photos')
@@ -14,6 +17,10 @@ export default function Home() {
       })
       .catch(err => console.error("Error fetching photos:", err));
   }, []);
+
+  const handlePhotoDeleted = (deletedId) => {
+    setPhotos(photos.filter(p => p.id !== deletedId));
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20"> {/* pt-20, so as not to hide under the Navbar */}
@@ -36,7 +43,11 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {photos.map((photo) => (
-              <div key={photo.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer group">
+              <div 
+               key={photo.id} 
+               onClick={() => setSelectedPhoto(photo)} 
+               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer group"
+              >
                 
                 {/* 1. Picture */}
                 <div className="h-48 overflow-hidden bg-gray-100 relative">
@@ -73,6 +84,14 @@ export default function Home() {
         )}
 
       </div>
+
+      {selectedPhoto && (
+        <PhotoDetailModal 
+          photo={selectedPhoto} 
+          onClose={() => setSelectedPhoto(null)} 
+          onDelete={handlePhotoDeleted}
+        />
+      )}
     </div>
   );
 };
