@@ -1,0 +1,51 @@
+@startmindmap
+<style>
+mindmapDiagram {
+node {
+BackgroundColor white
+BorderColor #2C3E50
+}
+:depth(1) {
+BackgroundColor #E74C3C
+FontColor white
+}
+}
+</style>
+
+* 📸 <b>PhotoSite Structure</b>
+
+** 🌍 <b>HEADER (Top Bar)</b>
+*** Logo
+*** 🔍 Search + 📂 Category Dropdown
+*** 🏠 Link: Home
+*** 👤 Link: My Pictures
+*** 🟢 Button: UPLOAD
+*** Profile (Logout, Settings)
+
+** 📄 <b>VIEWS (Content)</b>
+*** Home
+**** Tab: New
+**** Tab: Popular (Downloads)
+**** Photo Grid
+*** My Pictures (Grid + Edit/Delete)
+
+** 🧩 <b>MODALS</b>
+*** 📤 Upload Modal
+**** File Input
+**** Title Input
+**** Categories (Tags/Multiselect)
+**** Button: Publish
+*** 👁️ Detail Modal
+**** Full Image
+**** Button: Download
+**** Button: Report
+
+** 🔐 <b>AUTH PAGES</b>
+*** Login
+*** Register
+
+** 👮‍♂️ <b>ADMIN</b>
+*** Users
+*** Categories
+
+@endmindmap

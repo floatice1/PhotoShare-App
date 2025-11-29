@@ -1,0 +1,50 @@
+@startuml
+
+' Setting the appearance to be beautiful
+hide circle
+skinparam linetype ortho
+
+entity "Users" as users {
+*id : INT <<PK>>
+--
+username : VARCHAR(50)
+password : VARCHAR(255)
+role : VARCHAR(20)
+created_at : DATETIME
+}
+
+entity "Pictures" as pictures {
+*id : INT <<PK>>
+--
+*user_id : INT <<FK>>
+title : VARCHAR(100)
+file_path : VARCHAR(255)
+size_kb : INT
+format : VARCHAR(10)
+resolution : VARCHAR(20)
+downloads_count : INT DEFAULT 0
+uploaded_at : DATETIME
+}
+
+entity "Categories" as categories {
+*id : INT <<PK>>
+--
+name : VARCHAR(50)
+}
+
+entity "Picture_Categories" as pict_cat {
+*picture_id : INT <<FK>>
+*category_id : INT <<FK>>
+}
+
+' Relationships between tables
+' One user can have many pictures
+users ||..o{ pictures : "uploads"
+
+' One picture can be in many records of the relationship table
+pictures ||..o{ pict_cat : "has"
+
+' One category can be in many records of the relationship table
+categories ||..o{ pict_cat : "contains"
+
+@enduml
