@@ -1,97 +1,99 @@
-📸 PhotoShare App
+# 📸 PhotoShare App
 
 This is a photo-sharing web application developed as a personal pet project to practice modern web development technologies. Users can upload their images, search for photos by categories, and download works by other authors.
 
-✨ Project Features
+## ✨ Project Features
 
-🏠 Core Functionality (App Shell)
+- **🏠 Core Functionality (App Shell)**
 
-Dynamic Feed: Photo viewing with sorting options:
+  - **Dynamic Feed**: Photo viewing with sorting options:
 
-🆕 Newest: Sorted by upload date.
+  - **🆕 Newest**: Sorted by upload date.
 
-🔥 Popular: Sorted by download count.
+- **🔥 Popular**: Sorted by download count.
 
-Smart Search: Search by title + category filtering.
+- **Smart Search**: Search by title + category filtering.
 
 Single Page Application (SPA): Built with React for a smooth, app-like experience without page reloads.
 
-👤 Roles & Permissions
+**👤 Roles & Permissions**
 
-User:
+- **User:**
 
-Register and Login.
+  - Register and Login.
 
-Upload photos with Drag & Drop.
+  - Upload photos with Drag & Drop.
 
-Add tags (categories) via multi-select.
+  - Add tags (categories) via multi-select.
 
-Edit/Delete own photos.
+  - Edit/Delete **own** photos.
 
-🛡️ Moderator:
+- **🛡️ Moderator:**
 
-Content Control: Can delet inappropriate photos uploaded by any user.
+  - **Content Control:** Can delet inappropriate photos uploaded by any user.
 
-Tag Management: Can edit categories if they are incorrect.
+  - **Tag Management:** Can edit categories if they are incorrect.
 
-👮‍♂️ Administrator:
+- **👮‍♂️ Administrator:**
 
-User Oversight: Can reset passwords for users who lost access.
+  - **User Oversight:** Can reset passwords for users who lost access.
 
-Role Management: Can promote users to Moderators or Admins.
+  - **Role Management:** Can promote users to Moderators or Admins.
 
-Global Settings: Full control over the platform.
+  - **Global Settings:** Full control over the platform.
 
-🛠️ Technologies
+## 🛠️ Technologies
 
-Frontend:
+- **Frontend:**
 
-React.js: For building the user interface.
+  - **React.js:** For building the user interface.
 
-Tailwind CSS: For modern, responsive styling.
+  - **Tailwind CSS:** For modern, responsive styling.
 
-Vite: For fast frontend tooling.
+  - **Vite:** For fast frontend tooling.
 
-Backend:
+- **Backend:**
 
-Python & Flask: REST API to handle data.
+  - **Python & Flask:** REST API to handle data.
 
-SQLAlchemy: ORM for database management.
+  - **SQLAlchemy:** ORM for database management.
 
-Database: SQLite (for development).
+- **Database:** SQLite (for development).
 
-🚀 How to Run the Project
+## 🚀 How to Run the Project
 
 Since this project uses React and Flask, you need to run two terminals: one for the backend and one for the frontend.
 
-1. Backend Setup (Flask)
+**1. Backend Setup (Flask)**
 
 Open your first terminal:
-
+```bash
 cd backend
 python -m venv venv
 # Activate venv:
-# Windows: venv\Scripts\activate
-# Mac/Linux: source venv/bin/activate
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
 
 pip install -r requirements.txt
 python setup_db.py  # Initialize DB
 python app.py       # Runs on localhost:5000
+```
 
-
-2. Frontend Setup (React + Tailwind)
+**2. Frontend Setup (React + Tailwind)**
 
 Open your second terminal:
-
+```bash
 cd frontend
 npm install
 npm run dev         # Runs on localhost:5173
-
+```
 
 Open your browser at http://localhost:5173 to see the app!
 
-📂 Project Structure
-
+## 📂 Project Structure
+```bash
 photoshare/
 ├── backend/               # Python Flask API
 │   ├── app.py             # API Routes
@@ -108,30 +110,30 @@ photoshare/
 │   └── package.json       # JS dependencies
 ├── docs/                  # Documentation & Diagrams
 └── README.md              # This file
+```
 
-
-🔐 Login Credentials (Test Accounts)
+## 🔐 Login Credentials (Test Accounts)
 
 After initializing the DB, the following accounts will be created:
 
-Admin:
+- **Admin:**
 
-Login: admin
+  - Login: ```admin```
 
-Password: admin
+  - Password: ```admin```
 
-Moderator:
+- **Moderator:**
 
-Login: mod
+  - Login: ```mod```
 
-Password: mod
+  - Password: ```mod```
 
-User:
+- **User:**
 
-Login: user
+  - Login: ```user```
 
-Password: user
+  - Password: ```user```
 
-📝 Authors
+## 📝 Author
 
 Yehor Shnyruk
