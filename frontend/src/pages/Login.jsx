@@ -1,13 +1,31 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", username, password);
+    setError('');
+
+    if (!username || !password) {
+      setError("Please enter both username and password.");
+      return;
+    }
+
+    const result = await login(username, password);
+
+    if (result.success) {
+      navigate('/home');
+    } else {
+      setError(result.error);
+    }
   };
 
   return (
@@ -15,6 +33,8 @@ export default function Login() {
       <div className="bg-white p-8 rounded-xl shadow-md w-96">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">📸 Login</h2>
         
+        {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm">{error}</div>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Username</label>

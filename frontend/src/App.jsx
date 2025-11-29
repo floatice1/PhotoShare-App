@@ -11,7 +11,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
-        <Route path="/home" element={<h1 className="text-center mt-10">Тут буде Головна!</h1>} />
+        <Route path="/home" element={<h1 className="text-center mt-10">Here will be Home Page!</h1>} />
       </Routes>
     </BrowserRouter>
   );
