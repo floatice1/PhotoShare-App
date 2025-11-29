@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import CategoryDropdown from './CategoryDropdown';
 
 export default function UploadModal({ onClose }) {
   const [file, setFile] = useState(null);
@@ -116,51 +117,10 @@ export default function UploadModal({ onClose }) {
             />
           </div>
 
-          {/* Categories (Tags) */}
-          <div className="relative">
-            <label className="block text-sm font-bold text-gray-700 mb-2">Categories</label>
-            
-            {/* Selected tags */}
-            <div className="flex flex-wrap gap-2 mb-2">
-              {selectedCategoriesObjects.map(cat => (
-                <span key={cat.id} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm flex items-center gap-1">
-                  {cat.name}
-                  <button 
-                    type="button" 
-                    onClick={() => removeCategory(cat.id)}
-                    className="hover:text-blue-900 font-bold"
-                  >
-                    &times;
-                  </button>
-                </span>
-              ))}
-            </div>
-
-            {/* Button to open the list */}
-            <button
-              type="button"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full text-left border border-gray-300 px-4 py-2 rounded-lg text-gray-600 bg-white hover:border-blue-400 focus:ring-2 focus:ring-blue-500 transition flex justify-between items-center"
-            >
-              <span>{availableCategories.length > 0 ? "Select a category..." : "All categories selected"}</span>
-              <span className="text-xs">▼</span>
-            </button>
-
-            {/* Dropdown list (Absolute) */}
-            {isDropdownOpen && availableCategories.length > 0 && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-40 overflow-y-auto">
-                {availableCategories.map(cat => (
-                  <div
-                    key={cat.id}
-                    onClick={() => addCategory(cat.id)}
-                    className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-gray-700 text-sm transition"
-                  >
-                    {cat.name}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <CategoryDropdown 
+            selectedIds={selectedCats} 
+            onChange={setSelectedCats} 
+          />
 
           {/* Submit button */}
           <button 
