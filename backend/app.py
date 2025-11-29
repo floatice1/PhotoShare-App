@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_login import LoginManager
 from models import db, User
@@ -34,6 +34,10 @@ def load_user(user_id):
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(photos_bp)
+
+@app.route('/uploads/<filename>')
+def serve_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

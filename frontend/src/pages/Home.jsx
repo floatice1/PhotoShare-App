@@ -1,7 +1,19 @@
 import Navbar from '../components/Navbar';
+import React, { useEffect, useState } from 'react';
 
 export default function Home() {
-  const dummyPhotos = [1, 2, 3, 4, 5, 6, 7, 8];
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/photos')
+      .then(res => res.json())
+      .then(data => {
+        setPhotos(data);
+        setLoading(false);
+      })
+      .catch(err => console.error("Error fetching photos:", err));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20"> {/* pt-20, so as not to hide under the Navbar */}
@@ -19,22 +31,46 @@ export default function Home() {
         </div>
 
         {/* Photo grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {dummyPhotos.map((item) => (
-            <div key={item} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer group">
-              {/* Photo placeholder */}
-              <div className="h-48 bg-gray-300 w-full flex items-center justify-center text-gray-500 group-hover:bg-gray-400">
-                PHOTO {item}
+        {loading ? (
+          <div className="text-center py-20 text-gray-500">Loading photos... ⏳</div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {photos.map((photo) => (
+              <div key={photo.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer group">
+                
+                {/* 1. Picture */}
+                <div className="h-48 overflow-hidden bg-gray-100 relative">
+                   <img 
+                     src={photo.image_url} 
+                     alt={photo.title} 
+                     className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                     loading="lazy" // Lazy loading (faster site)
+                   />
+                </div>
+                
+                {/* 2. Info */}
+                <div className="p-3">
+                  <h3 className="font-bold text-gray-800 truncate text-sm">{photo.title}</h3>
+                  <div className="flex justify-between items-center mt-1">
+                    <p className="text-xs text-gray-500">@{photo.author}</p>
+                    <p className="text-xs text-blue-500 font-bold flex items-center gap-1">
+                      ⬇ {photo.downloads}
+                    </p>
+                  </div>
+                </div>
+
               </div>
-              
-              {/* Caption */}
-              <div className="p-3">
-                <p className="font-bold text-gray-800 truncate">Cool photo {item}</p>
-                <p className="text-xs text-gray-500">Author: User123</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {/* If no photos */}
+        {!loading && photos.length === 0 && (
+          <div className="text-center py-20 bg-white rounded-xl shadow-sm">
+            <p className="text-2xl mb-2">🤷‍♂️</p>
+            <p className="text-gray-500">No photos yet. Be the first!</p>
+          </div>
+        )}
 
       </div>
     </div>
