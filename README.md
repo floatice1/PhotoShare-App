@@ -21,16 +21,19 @@ Single Page Application (SPA): Built with React for a smooth, app-like experienc
 Here is a look at the application in action:
 
 **Login Page**
-<img width="2528" height="1208" alt="Login" src="https://github.com/user-attachments/assets/066163e3-a5f3-49e8-b2c1-338b739e069b" />
+<img width="2528" height="1208" alt="Login" src="docs/screenshots/Login.png" />
 
 **Register Page**
-<img width="2528" height="1208" alt="Register" src="https://github.com/user-attachments/assets/881b7b00-3975-4dea-895c-95b6b23f2445" />
+<img width="2528" height="1208" alt="Register" src="docs/screenshots/Register.png" />
 
 **Main Page (Feed)**
-<img width="2528" height="1208" alt="Home" src="https://github.com/user-attachments/assets/00fc1325-b151-4a9a-937f-acda825c65f8" />
+<img width="2528" height="1208" alt="Home" src="docs/screenshots/Home.png" />
 
 **Upload Modal**
-<img width="2528" height="1208" alt="Upload" src="https://github.com/user-attachments/assets/36e8a9d9-6953-44e2-8895-2cd4ac2f4f03" />
+<img width="2528" height="1208" alt="Upload" src="docs/screenshots/Upload.png" />
+
+**Details Modal**
+<img width="2528" height="1208" alt="Upload" src="docs/screenshots/Details.png" />
 
 *Note: Screenshots are stored in the docs/screenshots folder.*
 
