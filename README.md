@@ -16,6 +16,24 @@ This is a photo-sharing web application developed as a personal pet project to p
 
 Single Page Application (SPA): Built with React for a smooth, app-like experience without page reloads.
 
+## 📸 Screenshots
+
+Here is a look at the application in action:
+
+**Login Page**
+<img width="2528" height="1208" alt="Login" src="https://github.com/user-attachments/assets/066163e3-a5f3-49e8-b2c1-338b739e069b" />
+
+**Register Page**
+<img width="2528" height="1208" alt="Register" src="https://github.com/user-attachments/assets/881b7b00-3975-4dea-895c-95b6b23f2445" />
+
+**Main Page (Feed)**
+<img width="2528" height="1208" alt="Home" src="https://github.com/user-attachments/assets/00fc1325-b151-4a9a-937f-acda825c65f8" />
+
+**Upload Modal**
+<img width="2528" height="1208" alt="Upload" src="https://github.com/user-attachments/assets/36e8a9d9-6953-44e2-8895-2cd4ac2f4f03" />
+
+*Note: Screenshots are stored in the docs/screenshots folder.*
+
 **👤 Roles & Permissions**
 
 - **User:**
